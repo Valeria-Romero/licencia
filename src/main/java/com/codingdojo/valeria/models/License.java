@@ -1,5 +1,6 @@
 package com.codingdojo.valeria.models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -109,6 +110,20 @@ public class License {
 	@PostPersist
 	protected void onUpdate() {
 		this.updatedAt = new Date();
+	}
+	
+	public String expirationDateFormat() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		return dateFormat.format(expirationDate);
+	}
+	
+	public String licenseNumberFormat() {
+		int zeroNum = 7 - String.valueOf(this.number).length();
+		StringBuilder newNumber = new StringBuilder();
+		for(int i=0; i< zeroNum; i++) {
+			newNumber.append("0");
+		}
+		return String.format("%s%d", newNumber, this.number);
 	}
 	
 }
